@@ -9,7 +9,7 @@ export class User{
   @Column({ length: 120 })
   name: string
 
-  @Column({ unique: true, length: 160 })
+  @Column({ unique: true, length: 160})
   email: string
 
   @Column()
@@ -20,7 +20,7 @@ export class User{
   teacher: boolean
 
   //opcional para uma conta normal exceto para a de professor, onde se torna obrigatoria.
-  @Column({unique: true, length: 11})
+  @Column({unique: true, length: 11, nullable: true})
   cpf: string
 
   @BeforeInsert()

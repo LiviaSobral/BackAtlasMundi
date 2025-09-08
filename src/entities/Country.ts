@@ -5,12 +5,15 @@ export class Country{
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column({ length: 120 })
+  @Column({ length: 120})
   name: string
 
   //informações rapidas
   @Column({ length: 400 })
   quickinformartion: string;
+
+  @Column({length:300})
+  pictureUrl:string
 
   //informações da politica
   @Column({ length: 880 })
