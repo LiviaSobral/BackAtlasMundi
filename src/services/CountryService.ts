@@ -22,7 +22,7 @@ export class CountryService {
         return await this.repo.save(country);
     }
 
-    async findByName(lang:boolean, name:string){
+    async findByName(name:string,lang:boolean){
         const country = await this.repo.findOne({where:{name: name, inEnglish: lang}})
         if(!country){
             throw new Error("Country was not found")

@@ -16,12 +16,12 @@ export class User{
   password: string
 
   //verdadeiro se professor MAS se for professor tem q dar cpf tambem
-  @Column()
-  teacher: boolean
+  @Column({nullable: true})
+  teacher?: boolean
 
   //opcional para uma conta normal exceto para a de professor, onde se torna obrigatoria.
   @Column({unique: true, length: 11, nullable: true})
-  cpf: string
+  cpf?: string
 
   @BeforeInsert()
   @BeforeUpdate()

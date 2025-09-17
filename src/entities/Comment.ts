@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm'
 
 @Entity('comments')
 export class Comment{
@@ -14,6 +14,9 @@ export class Comment{
     //determina se é uma pergunta que pode ser respondida por um professor, defaut seria false para sugestões de mudanças
     @Column()
     isQuestion:boolean
+    
+    @OneToOne(() => Comment)
+    related?:number
 
     @CreateDateColumn()
     createdAt: Date
