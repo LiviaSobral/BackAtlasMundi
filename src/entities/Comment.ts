@@ -1,12 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, ManyToMany } from 'typeorm'
+import { User } from './User'
+import { Country } from './Country'
 
 @Entity('comments')
 export class Comment{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({ length: 120 })
-    username: string
+    @ManyToOne(() => User, user => user.comments)
+    user: User
+
+    @ManyToOne(() => Country)
+    country:Country
 
     @Column({ length: 900})
     message:string
@@ -16,7 +21,7 @@ export class Comment{
     isQuestion:boolean
     
     @OneToOne(() => Comment)
-    related?:number
+    related?:Comment
 
     @CreateDateColumn()
     createdAt: Date

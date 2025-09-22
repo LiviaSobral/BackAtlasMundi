@@ -12,7 +12,7 @@ export class Country{
   @Column({ length: 400 })
   quickinformartion: string;
 
-  @Column({length:300})
+  @Column({length:300, nullable:true})
   pictureUrl:string
 
   //informações da politica

@@ -1,8 +1,10 @@
 import { AppDataSource } from '../data-source'
 import { User } from '../entities/User'
+import { CountryService } from './CountryService'
 
 export class UserService{
     private repo = AppDataSource.getRepository(User)
+    private servCountry = new CountryService()
 
     async create(data:Partial<User>){
         const exists = await this.repo.findOne({where:{email:data.email}})
@@ -15,7 +17,10 @@ export class UserService{
             data.teacher = false;
         }
         const user = this.repo.create(data)
-        return await this.repo.save(user)
+        await this.repo.save(user)
+        const clone:any = user
+        delete clone.password
+        return clone
     }
 
     async findById(id:number){
@@ -47,6 +52,18 @@ export class UserService{
         const {password, ...rest} = data
         Object.assign(user,rest)
         return await this.repo.save(user)
+    }
+
+    async saveTag(id:number, CountryId:number){
+        const user = await this.repo.findOne({where:{id:id}})
+        if(!user){
+            throw new Error("Usuario não encontrado")
+        }
+        const country = await this.servCountry.findById(CountryId)
+        user.tags?.push(country)
+        let clone:any = user
+        delete clone.password
+        return clone
     }
 
     async remove(id:number){

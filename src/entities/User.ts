@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany} from 'typeorm'
 import bcrypt from 'bcrypt'
+import { Country } from './Country'
 
 @Entity('users')
 export class User{
@@ -22,6 +23,12 @@ export class User{
   //opcional para uma conta normal exceto para a de professor, onde se torna obrigatoria.
   @Column({unique: true, length: 11, nullable: true})
   cpf?: string
+
+  @OneToMany(() => Comment, comment => comment)
+  comments?:Comment[]
+
+  @ManyToMany(() => Country)
+  tags?:Country[]
 
   @BeforeInsert()
   @BeforeUpdate()
