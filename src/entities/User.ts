@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany} from 'typeorm'
 import bcrypt from 'bcrypt'
 import { Country } from './Country'
+import { Comment } from './Comment'
 
 @Entity('users')
 export class User{
@@ -24,10 +25,10 @@ export class User{
   @Column({unique: true, length: 11, nullable: true})
   cpf?: string
 
-  @OneToMany(() => Comment, comment => comment)
+  @OneToMany(() => Comment, comment => comment.user, {nullable:true})
   comments?:Comment[]
 
-  @ManyToMany(() => Country)
+  @ManyToMany(() => Country, {nullable:true})
   tags?:Country[]
 
   @BeforeInsert()

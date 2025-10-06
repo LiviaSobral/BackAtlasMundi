@@ -29,7 +29,7 @@ export class CreateCountryDTO{
     @IsNotEmpty({message: "Culture2 cannot be null"})
     culture2:string
 
-    @IsNotEmpty({message: "IsEnglish cannot be null"})
+    @IsNotEmpty({message: "InEnglish cannot be null"})
     inEnglish:boolean
 
     @IsNotEmpty({message: "Sources cannot be null"})

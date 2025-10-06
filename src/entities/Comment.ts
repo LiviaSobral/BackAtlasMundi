@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne, ManyToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, ManyToOne} from 'typeorm'
 import { User } from './User'
 import { Country } from './Country'
 
@@ -20,7 +20,7 @@ export class Comment{
     @Column()
     isQuestion:boolean
     
-    @OneToOne(() => Comment)
+    @OneToOne(() => Comment, {nullable:true})
     related?:Comment
 
     @CreateDateColumn()

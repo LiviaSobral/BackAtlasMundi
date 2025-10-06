@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Comment } from './Comment';
 
 @Entity('countries')
 export class Country{
@@ -10,7 +11,7 @@ export class Country{
 
   //informações rapidas
   @Column({ length: 400 })
-  quickinformartion: string;
+  quickInfo: string;
 
   @Column({length:300, nullable:true})
   pictureUrl:string
@@ -21,19 +22,19 @@ export class Country{
 
   //separado pra facimente separar no front em paragrafos
   @Column({ length: 880 })
-  politics2paragraf:string;
+  politics2:string;
 
   @Column({ length: 880 })
   history:string;
 
   @Column({ length: 880 })
-  history2paragraf:string;
+  history2:string;
 
   @Column({ length: 880 })
   culture: string;
 
   @Column({ length: 880 })
-  culture2paragraf: string;
+  culture2: string;
 
   //para facilitar a mudança de linguagem, assim o front so muda a solicitação para receber apenas as q possuem inEnglish: true, ou reverte para apenas false
   @Column()
@@ -42,5 +43,8 @@ export class Country{
   //fonte de onde a informação foi tirada
   @Column({ length: 880 })
   sources:string;
+
+  @OneToMany(() => Comment, comment => comment.country, {nullable: true})
+  Comments:Comment[]
 
 }

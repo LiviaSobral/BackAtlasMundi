@@ -2,8 +2,9 @@ import { Request, Response, NextFunction } from 'express'
 import { verifyToken } from '../utils/jwt'
 
 export const modifyMiddleware = (req:Request,res:Response,next:NextFunction) =>{
-    if((req as any).user.teacher){
+    if((req as any).user.teacher === true){
         next()
+    }else{
+        return res.status(401).json({message:"Sem Permissão para acesso"})
     }
-    return res.status(401).json({message:"Sem Permissão para acesso"})
 }
