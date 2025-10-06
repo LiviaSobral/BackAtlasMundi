@@ -13,13 +13,12 @@ export class UserService{
         }
         if(data.cpf){
             data.teacher = true;
-        }else{
-            data.teacher = false;
         }
         const user = this.repo.create(data)
         await this.repo.save(user)
         const clone:any = user
         delete clone.password
+        delete clone.cpf
         return clone
     }
 
@@ -30,6 +29,7 @@ export class UserService{
         }
         const clone:any = user
         delete clone.password
+        delete clone.cpf
         return clone
     }
 
@@ -49,11 +49,15 @@ export class UserService{
         if(data.password){
             user.password = data.password
         }
+        if(data.cpf){
+            user.teacher = true;
+        }
         const {password, ...rest} = data
         Object.assign(user,rest)
         await this.repo.save(user)
         const clone:any = user
         delete clone.password
+        delete clone.cpf
         return clone
     }
 
@@ -66,6 +70,7 @@ export class UserService{
         user.tags?.push(country)
         let clone:any = user
         delete clone.password
+        delete clone.cpf
         return clone
     }
 
@@ -90,7 +95,7 @@ export class UserService{
 
         await this.repo.save(user)
 
-        const { password, ...clone } = user
+        const { password, cpf, ...clone } = user
 
         return clone
     }

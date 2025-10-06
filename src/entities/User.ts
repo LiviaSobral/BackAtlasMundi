@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany, JoinTable} from 'typeorm'
 import bcrypt from 'bcrypt'
 import { Country } from './Country'
 import { Comment } from './Comment'
@@ -18,8 +18,8 @@ export class User{
   password: string
 
   //verdadeiro se professor MAS se for professor tem q dar cpf tambem
-  @Column({nullable: true})
-  teacher?: boolean
+  @Column({ default:false })
+  teacher: boolean
 
   //opcional para uma conta normal exceto para a de professor, onde se torna obrigatoria.
   @Column({unique: true, length: 11, nullable: true})
@@ -28,7 +28,8 @@ export class User{
   @OneToMany(() => Comment, comment => comment.user, {nullable:true})
   comments?:Comment[]
 
-  @ManyToMany(() => Country, {nullable:true})
+  @ManyToMany(() => Country)
+  @JoinTable()
   tags?:Country[]
 
   @BeforeInsert()

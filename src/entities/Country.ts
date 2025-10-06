@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
 import { Comment } from './Comment';
+import { User } from './User'; 
 
 @Entity('countries')
 export class Country{
