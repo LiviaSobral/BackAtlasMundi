@@ -36,4 +36,14 @@ export class UserController{
             res.status(400).json({message: e.message})
         }
     }
+
+    // feito pelo jhonny Peter Deusgamer
+    async DeleteTag(req:Request,res:Response){
+        try{
+            const result = await service.deleteTag((req as any).user.id, req.body.CountryId)
+            res.json(result)
+        }catch(e:any){
+            res.status(400).json({message: e.message})
+        }
+    }
 }
