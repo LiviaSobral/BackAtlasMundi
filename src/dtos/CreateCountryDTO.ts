@@ -11,27 +11,27 @@ export class CreateCountryDTO{
     @IsOptional()
     url?:string
 
-    @IsNotEmpty({message: "Politics cannot be null"})
+    @IsNotEmpty({message: "politics cannot be null"})
     politics:string
 
-    @IsNotEmpty({message: "Politics2 cannot be null"})
+    @IsNotEmpty({message: "politics2 cannot be null"})
     politics2:string
 
-    @IsNotEmpty({message: "History cannot be null"})
+    @IsNotEmpty({message: "history cannot be null"})
     history:string
 
-    @IsNotEmpty({message: "History2 cannot be null"})
+    @IsNotEmpty({message: "history2 cannot be null"})
     history2:string
 
-    @IsNotEmpty({message: "Culture cannot be null"})
+    @IsNotEmpty({message: "culture cannot be null"})
     culture:string
 
-    @IsNotEmpty({message: "Culture2 cannot be null"})
+    @IsNotEmpty({message: "culture2 cannot be null"})
     culture2:string
 
-    @IsNotEmpty({message: "InEnglish cannot be null"})
+    @IsNotEmpty({message: "inEnglish cannot be null"})
     inEnglish:boolean
 
-    @IsNotEmpty({message: "Sources cannot be null"})
+    @IsNotEmpty({message: "sources cannot be null"})
     sources:string
 }

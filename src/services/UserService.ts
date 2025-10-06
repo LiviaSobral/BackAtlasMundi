@@ -51,7 +51,10 @@ export class UserService{
         }
         const {password, ...rest} = data
         Object.assign(user,rest)
-        return await this.repo.save(user)
+        await this.repo.save(user)
+        const clone:any = user
+        delete clone.password
+        return clone
     }
 
     async saveTag(id:number, CountryId:number){
