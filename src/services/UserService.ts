@@ -67,7 +67,8 @@ export class UserService{
             throw new Error("Usuário não encontrado")
         }
         const country = await this.servCountry.findById(CountryId)
-        user.tags?.push(country)
+        user.tag = country
+        await this.repo.save(user)
         let clone:any = user
         delete clone.password
         delete clone.cpf
@@ -76,7 +77,7 @@ export class UserService{
 
 
     // feito pelo jhonny Peter Deusgamer
-    async deleteTag(userId: number, countryId: number) {
+    async deleteTag(userId: number) {
         const user = await this.repo.findOne({
             where: { id: userId },
             relations: ['tags'],
@@ -86,12 +87,13 @@ export class UserService{
             throw new Error("Usuário não encontrado")
         }
 
-        if (!user.tags || user.tags.length === 0) {
-            throw new Error("Esse usuário não possui tags para remover")
+        if (!user.tag ) {
+            throw new Error("Esse usuário não possui tag para remover")
         }
 
         // parte feita pelo gpt, nao sei o que "filter" faz mas eu deduzo que ta tirando a tag do user
-        user.tags = user.tags.filter(tag => tag.id !== countryId)
+        //user.tags = user.tags.filter(tag => tag.id !== countryId)
+        user.tag = null
 
         await this.repo.save(user)
 

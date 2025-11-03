@@ -12,5 +12,6 @@ router.get('/me', authMiddleware, controller.getById.bind(controller))
 router.put('/me', authMiddleware, validateDTO(UpdateUserDTO), controller.update.bind(controller))
 router.delete('/me',authMiddleware,controller.remove.bind(controller))
 router.put('/me/tag',authMiddleware,validateDTO(CreateTagUserDTO), controller.SaveTag.bind(controller))
+router.put('/me/tag/delete',authMiddleware, controller.DeleteTag.bind(controller))
 
 export default router

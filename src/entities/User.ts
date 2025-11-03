@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany, JoinTable} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToMany, ManyToMany, JoinTable, ManyToOne} from 'typeorm'
 import bcrypt from 'bcrypt'
 import { Country } from './Country'
 import { Comment } from './Comment'
@@ -28,9 +28,8 @@ export class User{
   @OneToMany(() => Comment, comment => comment.user, {nullable:true})
   comments?:Comment[]
 
-  @ManyToMany(() => Country)
-  @JoinTable()
-  tags?:Country[]
+  @ManyToOne(() => Country, {nullable:true})
+  tag?:Country | null
 
   @BeforeInsert()
   @BeforeUpdate()
