@@ -52,7 +52,7 @@ export class UserService{
         if(data.cpf){
             user.teacher = true;
         }
-        const {password, ...rest} = data
+        const {password, teacher, ...rest} = data
         Object.assign(user,rest)
         await this.repo.save(user)
         const clone:any = user
