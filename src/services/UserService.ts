@@ -13,6 +13,8 @@ export class UserService{
         }
         if(data.cpf){
             data.teacher = true;
+        }else{
+            data.teacher = false;
         }
         const user = this.repo.create(data)
         await this.repo.save(user)
