@@ -14,6 +14,7 @@ export class UserService{
         if(data.cpf){
             data.teacher = true;
         }else{
+            //mandar email e verificar resposta, se não for aceito fazer cadastro como usuario comun
             data.teacher = false;
         }
         const user = this.repo.create(data)
@@ -52,6 +53,7 @@ export class UserService{
             user.password = data.password
         }
         if(data.cpf){
+            //mandar email e verificar resposta, se não for aceito fazer cadastro como usuario comun
             user.teacher = true;
         }
         const {password, teacher, ...rest} = data
