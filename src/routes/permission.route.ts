@@ -6,6 +6,7 @@ import { modifyMiddleware } from '../middlewares/ModifyMiddleware'
 const router = Router()
 const controller = new PermissionController()
 
-router.get('/', controller.verifyResponse.bind(controller))
+router.get('/approve', controller.approve.bind(controller))
+router.get('/deny', controller.deny.bind(controller))
 
 export default router
