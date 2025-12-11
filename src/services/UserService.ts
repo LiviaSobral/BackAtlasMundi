@@ -1,4 +1,5 @@
 import { AppDataSource } from '../data-source'
+import * as nodemailer from 'nodemailer';
 import { User } from '../entities/User'
 import { CountryService } from './CountryService'
 
@@ -6,19 +7,52 @@ export class UserService{
     private repo = AppDataSource.getRepository(User)
     private servCountry = new CountryService()
 
+    private async email(userId:number, userInfo:string){
+        const transporter = nodemailer.createTransport({
+              host: "smtp.gmail.com",
+              port: 465,
+              secure: true,
+              auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_PASSWORD,
+              },
+            });
+        
+            // Monta a URL que o moderador vai clicar para APROVAR a requisição.
+            // Ela chama a rota /permission/approve enviando o ID da requisição pendente.
+            const approveURL = `http://localhost:3000/permission/approve?id=${userId}`;
+        
+            // Mesma coisa aqui, só que para negar
+            const denyURL = `http://localhost:3000/permission/deny?id=${userId}`;
+        
+            await transporter.sendMail({
+              from: '"Atlas" <atlasmundi0@gmail.com>',
+              to: process.env.GMAIL_USER,
+              subject: "Solicitação aguardando aprovação",
+              html: `
+                <h2>Nova solicitação de modificação</h2>
+                <p><pre>${userInfo}</pre></p>
+                <a href="${approveURL}" style="background:green;color:white;padding:10px;border-radius:5px;">APROVAR</a>
+                <br><br>
+                <a href="${denyURL}" style="background:red;color:white;padding:10px;border-radius:5px;">NEGAR</a>
+              `,
+            });
+    }
+
     async create(data:Partial<User>){
         const exists = await this.repo.findOne({where:{email:data.email}})
         if(exists){
             throw new Error("Email ja utilizado")
         }
+        data.teacher=false
+        
+        const user = this.repo.create(data)
+        const saved = await this.repo.save(user)
         if(data.cpf){
-            data.teacher = true;
-        }else{
-            //mandar email e verificar resposta, se não for aceito fazer cadastro como usuario comun
+            //mandar email para pedir a criação de um usuario professor
+            this.email(saved.id,JSON.stringify(data))
             data.teacher = false;
         }
-        const user = this.repo.create(data)
-        await this.repo.save(user)
         const clone:any = user
         delete clone.password
         delete clone.cpf
@@ -53,8 +87,9 @@ export class UserService{
             user.password = data.password
         }
         if(data.cpf){
-            //mandar email e verificar resposta, se não for aceito fazer cadastro como usuario comun
-            user.teacher = true;
+            //mandar email para pedir a criação de um usuario professor
+            this.email(id,JSON.stringify(data))
+            user.teacher = false;
         }
         const {password, teacher, ...rest} = data
         Object.assign(user,rest)

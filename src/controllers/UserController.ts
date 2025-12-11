@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { UserService } from '../services/UserService'
+import { ModPermissionMiddleware } from '../middlewares/ModPermissionMiddleware'
 
 const service = new UserService()
 
@@ -15,6 +16,9 @@ export class UserController{
     async update(req:Request,res:Response){
         try{
             const user = await service.update((req as any).user.id, req.body)
+            if(req.body.cpf){
+                ModPermissionMiddleware
+            }
             res.json(user)
         }catch(e:any){
             res.status(400).json({message: e.message})
