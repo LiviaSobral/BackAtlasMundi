@@ -9,8 +9,8 @@ export class AuthController{
         try{
             const user = await service.create(req.body)
             const user2 = await service.findByEmail(user.email)
-            if (!user2) {return res.status(404).json({ message: 'Usuário não encontrado' })}
-            const token = generateToken({id: user2.id, email: user2.email, teacher: user2.teacher||false})
+            if (!user2) {return res.status(404).json({ message: 'Usuário não pode ser criado corretamente' })}
+            const token = generateToken({id: user.id, email: user.email, teacher: user.teacher})
             const safe:any = user
             delete safe.password
             res.status(201).json({user:safe,token})

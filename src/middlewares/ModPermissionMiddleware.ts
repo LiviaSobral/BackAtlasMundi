@@ -57,7 +57,7 @@ export const ModPermissionMiddleware = async (
     await transporter.sendMail({
       from: '"Atlas" <atlasmundi0@gmail.com>',
       to: process.env.GMAIL_USER,
-      subject: "Solicitação aguardando aprovação",
+      subject: "Solicitação deletar pais",
       html: `
         <h2>Nova solicitação de modificação</h2>
         <p><pre>${JSON.stringify(req.body, null, 2)}</pre></p>

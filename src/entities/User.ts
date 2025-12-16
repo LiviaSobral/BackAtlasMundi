@@ -25,10 +25,10 @@ export class User{
   @Column({unique: true, length: 11, nullable: true})
   cpf?: string
 
-  @OneToMany(() => Comment, comment => comment.user, {nullable:true})
+  @OneToMany(() => Comment, comment => comment.user, {nullable:true, onDelete: "CASCADE"})
   comments?:Comment[]
 
-  @ManyToOne(() => Country, {nullable:true})
+  @ManyToOne(() => Country, {nullable:true, onDelete: "CASCADE"})
   tag?:Country | null
 
   @BeforeInsert()

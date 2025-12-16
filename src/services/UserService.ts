@@ -28,7 +28,7 @@ export class UserService{
             await transporter.sendMail({
               from: '"Atlas" <atlasmundi0@gmail.com>',
               to: process.env.GMAIL_USER,
-              subject: "Solicitação aguardando aprovação",
+              subject: "Solicitação para criar novo usuario professor",
               html: `
                 <h2>Nova solicitação de modificação</h2>
                 <p><pre>${userInfo}</pre></p>

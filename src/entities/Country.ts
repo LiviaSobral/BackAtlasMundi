@@ -45,7 +45,7 @@ export class Country{
   @Column({ length: 880 })
   sources:string;
 
-  @OneToMany(() => Comment, comment => comment.country, {nullable: true})
+  @OneToMany(() => Comment, comment => comment.country, {nullable: true, onDelete: "CASCADE"})
   Comments:Comment[]
 
 }
