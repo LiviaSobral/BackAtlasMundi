@@ -6,7 +6,7 @@ const service = new CommentService()
 export class CommentController{
     async create(req:Request, res:Response){
         try{
-            const comment = await service.create((req as any).user.id.countryId,req.body.message,req.body.isQuestion,req.body.relatedTo)
+            const comment = await service.create((req as any).user.id, req.body.countryId,req.body.message,req.body.isQuestion,req.body.relatedTo)
             res.json(comment)
         }catch(e:any){
             res.status(400).json({message:e.message})

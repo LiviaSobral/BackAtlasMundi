@@ -8,8 +8,8 @@ export class CommentService {
     private serv = new UserService()
     private servCountry = new CountryService()
 
-    async create(userId:number, countryId:number, message:string, isQuestion:boolean, relatedTo?:number){
-        const user = await this.serv.findById(userId)
+    async create(id:number, countryId:number, message:string, isQuestion:boolean, relatedTo?:number){
+        const user = await this.serv.findById(id)
         const country = await this.servCountry.findById(countryId)
         let data
         if(relatedTo){
