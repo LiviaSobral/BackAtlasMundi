@@ -29,7 +29,6 @@ export class UserService{
             const requestId = saved.id;
             const approveURL = `http://localhost:3000/permission/approve?id=${requestId}`;
         
-            // Mesma coisa aqui, só que para negar
             const denyURL = `http://localhost:3000/permission/deny?id=${requestId}`;
         
             await transporter.sendMail({
