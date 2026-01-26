@@ -9,7 +9,7 @@ export class UserService{
     private servCountry = new CountryService()
     private modRepo = AppDataSource.getRepository(UserRequest);
 
-    private async email(userInfo:string){
+    private async email(userInfo:JSON){
         const transporter = nodemailer.createTransport({
               host: "smtp.gmail.com",
               port: 465,
@@ -37,7 +37,7 @@ export class UserService{
               subject: "Solicitação para criar novo usuario professor",
               html: `
                 <h2>Nova solicitação de modificação</h2>
-                <p><pre>${userInfo}</pre></p>
+                <p><pre>${JSON.stringify(userInfo, null, 2)}</pre></p>
                 <a href="${approveURL}" style="background:green;color:white;padding:10px;border-radius:5px;">APROVAR</a>
                 <br><br>
                 <a href="${denyURL}" style="background:red;color:white;padding:10px;border-radius:5px;">NEGAR</a>
@@ -59,7 +59,7 @@ export class UserService{
         delete clone.password
         if(data.cpf){
             //mandar email para pedir a criação de um usuario professor
-            this.email(JSON.stringify(clone))
+            this.email(clone)
             data.teacher = false;
         }
         delete clone.cpf
@@ -100,7 +100,7 @@ export class UserService{
         delete clone.password
         if(data.cpf){
             //mandar email para pedir a criação de um usuario professor
-            this.email(JSON.stringify(clone))
+            this.email(clone)
             user.teacher = false;
         }
         delete clone.cpf
