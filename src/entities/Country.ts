@@ -21,21 +21,11 @@ export class Country{
   @Column({ length: 880 })
   politics:string;
 
-  //separado pra facimente separar no front em paragrafos
-  @Column({ length: 880 })
-  politics2:string;
-
   @Column({ length: 880 })
   history:string;
 
   @Column({ length: 880 })
-  history2:string;
-
-  @Column({ length: 880 })
   culture: string;
-
-  @Column({ length: 880 })
-  culture2: string;
 
   //para facilitar a mudança de linguagem, assim o front so muda a solicitação para receber apenas as q possuem inEnglish: true, ou reverte para apenas false
   @Column()

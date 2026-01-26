@@ -17,25 +17,13 @@ export class UpdateCountryDTO{
     @IsOptional()
     politics?:string
 
-    @IsNotEmpty({message: "Politics2 cannot be null"})
-    @IsOptional()
-    politics2:string
-
     @IsNotEmpty({message: "History cannot be null"})
     @IsOptional()
     history:string
 
-    @IsNotEmpty({message: "History2 cannot be null"})
-    @IsOptional()
-    history2:string
-
     @IsNotEmpty({message: "Culture cannot be null"})
     @IsOptional()
     culture:string
-
-    @IsNotEmpty({message: "Culture2 cannot be null"})
-    @IsOptional()
-    culture2:string
 
     @IsNotEmpty({message: "IsEnglish cannot be null"})
     @IsOptional()

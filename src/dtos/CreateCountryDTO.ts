@@ -14,20 +14,11 @@ export class CreateCountryDTO{
     @IsNotEmpty({message: "politics cannot be null"})
     politics:string
 
-    @IsNotEmpty({message: "politics2 cannot be null"})
-    politics2:string
-
     @IsNotEmpty({message: "history cannot be null"})
     history:string
 
-    @IsNotEmpty({message: "history2 cannot be null"})
-    history2:string
-
     @IsNotEmpty({message: "culture cannot be null"})
     culture:string
-
-    @IsNotEmpty({message: "culture2 cannot be null"})
-    culture2:string
 
     @IsNotEmpty({message: "inEnglish cannot be null"})
     inEnglish:boolean

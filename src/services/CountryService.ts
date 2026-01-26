@@ -4,7 +4,7 @@ import { Country } from '../entities/Country'
 export class CountryService {
     private repo = AppDataSource.getRepository(Country)
 
-    async create(data: {name:string, quick:string, url?:string , pol:string, pol2:string, his:string, his2:string, cul:string, cul2:string,lang:boolean, source:string}){
+    async create(data: {name:string, quick:string, url?:string , pol:string, his:string, cul:string,lang:boolean, source:string}){
         const exists = await this.repo.findOne({where:{name: data.name, inEnglish: data.lang}})
         if(exists){
             throw new Error('Country already exists')
