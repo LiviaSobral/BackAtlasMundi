@@ -1,0 +1,91 @@
+
+-- PROCEDURE (COMO SE FOSSE UMA FUNÇÃO DE JS)
+
+DELIMITER $$
+
+CREATE PROCEDURE handle_user_request(body TEXT)
+BEGIN
+    -- DELETE COUNTRY
+    IF JSON_VALID(body) AND JSON_EXTRACT(body, '$.teacher') IS NULL THEN
+        DELETE FROM countries
+        WHERE name = JSON_UNQUOTE(JSON_EXTRACT(body, '$.name'));
+    END IF;
+
+    -- UPDATE USER
+    IF JSON_VALID(body) AND JSON_EXTRACT(body, '$.teacher') IS NOT NULL THEN
+        UPDATE users
+        SET teacher = IF(JSON_EXTRACT(body, '$.teacher') = TRUE, 1, 0)
+        WHERE id = JSON_EXTRACT(body, '$.id');
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+
+
+-- TRIGGER (COMO SE FOSSE UM EVENTO)
+
+DELIMITER $$
+
+CREATE TRIGGER trg_user_request_approved
+AFTER UPDATE ON user_request
+FOR EACH ROW
+BEGIN
+    IF OLD.status <> 'approved' AND NEW.status = 'approved' THEN
+        CALL handle_user_request(NEW.request_body);
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+-- Mostrar todas as procedures do banco atual
+SELECT ROUTINE_SCHEMA, ROUTINE_NAME, ROUTINE_TYPE
+FROM INFORMATION_SCHEMA.ROUTINES
+WHERE ROUTINE_TYPE='PROCEDURE'
+  AND ROUTINE_SCHEMA = DATABASE();
+
+
+
+
+
+-- Mostrar todas as triggers do banco atual
+SELECT TRIGGER_SCHEMA, TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE
+FROM INFORMATION_SCHEMA.TRIGGERS
+WHERE TRIGGER_SCHEMA = DATABASE();
+
+
+
+
+
+-- Atenção: isso deleta TODAS as procedures do banco atual
+SET GROUP_CONCAT_MAX_LEN = 100000;
+
+SELECT CONCAT('DROP PROCEDURE IF EXISTS `', ROUTINE_NAME, '`;') AS drop_command
+FROM INFORMATION_SCHEMA.ROUTINES
+WHERE ROUTINE_TYPE='PROCEDURE' AND ROUTINE_SCHEMA = DATABASE();
+
+
+
+
+
+
+
+-- Atenção: isso deleta TODAS as triggers do banco atual
+SET GROUP_CONCAT_MAX_LEN = 100000;
+
+SELECT CONCAT('DROP TRIGGER IF EXISTS `', TRIGGER_NAME, '`;') AS drop_command
+FROM INFORMATION_SCHEMA.TRIGGERS
+WHERE TRIGGER_SCHEMA = DATABASE();
+
+
+
+
+
