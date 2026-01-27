@@ -14,7 +14,7 @@ BEGIN
     -- UPDATE USER
     IF JSON_VALID(body) AND JSON_EXTRACT(body, '$.teacher') IS NOT NULL THEN
         UPDATE users
-        SET teacher = IF(JSON_EXTRACT(body, '$.teacher') = TRUE, 1, 0)
+        SET teacher = 1
         WHERE id = JSON_EXTRACT(body, '$.id');
     END IF;
 END$$
